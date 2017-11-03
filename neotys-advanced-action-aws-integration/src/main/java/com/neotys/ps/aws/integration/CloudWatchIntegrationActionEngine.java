@@ -72,7 +72,6 @@ public final class CloudWatchIntegrationActionEngine implements ActionEngine {
 		
 		//Parse the parameters
 		parseParameters(context, parameters);
-		appendLineToStringBuilder(requestBuilder,String.format("AWS Region:%s",awsRegion));
 
 		//Instantiate a NL Web API client		
 		String nlWebPath = String.format("https://%s/v1",nlWebHost);		
@@ -95,6 +94,7 @@ public final class CloudWatchIntegrationActionEngine implements ActionEngine {
 		
 		try {
 			
+			//Get the test information
 			TestDefinition definition = nlWebClient.getTest(testId);	
 			Double lgCount = new Double(definition.getLgCount());
 			String authorName = convertStringToASCII(definition.getAuthor());
@@ -102,7 +102,7 @@ public final class CloudWatchIntegrationActionEngine implements ActionEngine {
 			String scenarioName = convertStringToASCII(definition.getScenario());
 			String testName = convertStringToASCII(definition.getName());
 			
-			//Log the name of the test
+			//Log the information of the test
 			appendLineToStringBuilder(requestBuilder,String.format("Name:%s",testName));			
 			appendLineToStringBuilder(requestBuilder,String.format("Description:%s",definition.getDescription()));
 			appendLineToStringBuilder(requestBuilder,String.format("Author:%s",authorName));
@@ -177,6 +177,7 @@ public final class CloudWatchIntegrationActionEngine implements ActionEngine {
 					String scriptName = path.get(0);
 					String baseContainer = path.get(1);
 					
+					//Store the path in a string
 					StringBuilder transactionPath = new StringBuilder();
 					for (String s : path) {
 						transactionPath.append(s);						
